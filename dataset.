@@ -1,0 +1,24 @@
+% The weather problem is a tiny dataset that we will use repeatedly to illustrate machine learning methods. Entirely fictitious, it supposedly concerns the conditions that are suitable for playing some unspecified game. In general, instances in a dataset are characterized by the values of features, or attributes, that measure different aspects of the instance. In this case there are four attributes: outlook, temperature, humidity, and windy. The outcome is whether to play or not.
+@RELATION Weather
+
+@ATTRIBUTE outlook {overcast, rainy, sunny}
+@ATTRIBUTE temperature INTEGER
+@ATTRIBUTE humidity INTEGER
+@ATTRIBUTE windy {True, False}
+@ATTRIBUTE play {no, yes}
+
+@DATA
+sunny,85,85,True,no
+sunny,80,90,True,no
+overcast,83,86,True,yes
+rainy,70,96,True,yes
+rainy,68,80,True,yes
+rainy,65,70,True,no
+overcast,64,65,True,yes
+sunny,72,95,True,no
+sunny,69,70,True,yes
+rainy,75,80,True,yes
+sunny,75,70,True,yes
+overcast,72,90,True,yes
+overcast,81,75,True,yes
+rainy,71,91,True,no
