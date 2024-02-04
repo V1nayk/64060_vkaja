@@ -1,0 +1,23 @@
+---
+title: "Assignment1Vinay"
+author: "vinay"
+date: "2024-02-04"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+url <- "https://archive.ics.uci.edu/ml/machine-learning-databases/blood-transfusion/transfusion.data"
+data <- read_csv(url, col_names = c("Recency", "Frequency", "Monetary", "Time", "Donated"))
+str(data)
+quantitative_var <- "Recency"
+categorical_var <- "Donated"
+data$Donated <- factor(data$Donated, levels = c("0", "1"), labels = c("Not Donated", "Donated"))
+print(summary(data[c("Recency", "Frequency", "Monetary", "Time")]))
+print(summary(data$Donated))
+print(table(data$Donated))
+ggplot(data, aes(x = Monetary)) + geom_bar(fill = "blue", color = "black") + labs(title = "Distribution of Monetary Donations", x = "Monetary", y = "Frequency")
+ggplot(data, aes(x = Frequency, y = Monetary)) + geom_point(color = "Red") + labs(title = "Scatterplot of Frequency vs Monetary", x = "Frequency", y = "Monetary")
+```
