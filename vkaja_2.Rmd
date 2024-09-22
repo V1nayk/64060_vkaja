@@ -1,0 +1,54 @@
+---
+title: "vkaja_2"
+author: "Vinay Kaja"
+date: "2024-09-22"
+output: word_document
+---
+
+```{r setup}
+#Load the required package for linear programming
+library(lpSolve)
+
+#Set up the objective function: net profits for large, medium, and small sizes across three plants
+objective_function <- c(420, 360, 300,   # Plant 1 profits
+                        420, 360, 300,   # Plant 2 profits
+                        420, 360, 300)   # Plant 3 profits
+
+#Set up the constraints matrix
+#Each row represents a constraint: 
+#1. Total production capacity for each plant
+#2. Storage space constraints for each plant
+#3. Sales forecast limits for each product size
+confusion_mat <- matrix(c(
+# Total production capacity (Plant 1, 2, and 3)
+1, 1, 1, 0, 0, 0, 0, 0, 0,    # Plant 1
+0, 0, 0, 1, 1, 1, 0, 0, 0,    # Plant 2
+0, 0, 0, 0, 0, 0, 1, 1, 1,    # Plant 3
+#Storage space constraints
+20, 15, 12, 0, 0, 0, 0, 0, 0,  # Plant 1
+0, 0, 0, 20, 15, 12, 0, 0, 0,  # Plant 2
+0, 0, 0, 0, 0, 0, 20, 15, 12,  # Plant 3
+# Sales forecast constraints
+1, 0, 0, 1, 0, 0, 1, 0, 0,     # Large size
+0, 1, 0, 0, 1, 0, 0, 1, 0,     # Medium size
+0, 0, 1, 0, 0, 1, 0, 0, 1      # Small size
+), nrow = 9, byrow = TRUE)
+
+#Define the direction of the inequality constraints (all are less than or equal)
+f.direction <- rep("<=", 9)
+
+#Set up the right-hand side coefficients for each constraint
+rhs_coeffecients <- c(750, 900, 450,  # Production capacity for each plant
+                      13000, 12000, 5000,  # Storage space for each plant
+                      900, 1200, 750)     # Sales forecast limits
+
+#Solve the linear programming problem to maximize profit
+solution <- lp("max", objective_function, confusion_mat, f.direction, rhs_coeffecients)
+
+# Value of z
+lp("max", objective_function, confusion_mat, f.direction, rhs_coeffecients)
+
+#Output the solution, which includes optimal production quantities for each size at each plant
+print(solution$solution)
+
+```
